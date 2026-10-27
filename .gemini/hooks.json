@@ -1,0 +1,15 @@
+
+{
+  "PreToolUse": [
+    {
+      "matcher": "*",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "node .agents/hooks/pre-tool.cjs",
+          "timeout": 10
+        }
+      ]
+    }
+  ]
+}
