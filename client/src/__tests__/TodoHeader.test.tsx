@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import React from 'react';
 import { TodoHeader } from '../components/TodoHeader';
 import { ThemeProvider } from '../context/ThemeContext';
 import * as themeHook from '../hooks/useTheme';
@@ -142,5 +141,113 @@ describe('TodoHeader Component - Theme Toggle & Accessibility', () => {
     const newTaskBtn = screen.getByRole('button', { name: /New Task/i });
     fireEvent.click(newTaskBtn);
     expect(handleOpenCreateModal).toHaveBeenCalledTimes(1);
+  });
+
+  // --- Additional Figma Redesign, Layout, and Theming Tests ---
+
+  // TC-HDR-001: Dynamic theme badge label in light vs dark mode
+  it('TC-HDR-001: should display "Light Theme (Olive)" badge in light mode and "Dark Theme" in dark mode', () => {
+    const { rerender } = render(
+      <ThemeProvider initialTheme="light">
+        <TodoHeader counts={mockCounts} onOpenCreateModal={vi.fn()} />
+      </ThemeProvider>
+    );
+
+    const lightBadge = screen.getByText('Light Theme (Olive)');
+    expect(lightBadge).toBeInTheDocument();
+    expect(lightBadge).toHaveClass('bg-[#EDF1E5]', 'text-[#536031]');
+
+    rerender(
+      <ThemeProvider key="dark" initialTheme="dark">
+        <TodoHeader counts={mockCounts} onOpenCreateModal={vi.fn()} />
+      </ThemeProvider>
+    );
+
+    const darkBadge = screen.getByText('Dark Theme');
+    expect(darkBadge).toBeInTheDocument();
+    expect(darkBadge).toHaveClass('dark:bg-[#3A3E43]', 'dark:text-[#D0D5D8]');
+  });
+
+  // TC-HDR-002: Brand icon container Figma styling
+  it('TC-HDR-002: should render brand icon container with Olive background and CheckSquare icon', () => {
+    render(
+      <ThemeProvider initialTheme="light">
+        <TodoHeader counts={mockCounts} onOpenCreateModal={vi.fn()} />
+      </ThemeProvider>
+    );
+
+    const brandIconContainer = screen.getByText('TaskMaster').closest('header')?.querySelector('.w-11.h-11');
+    expect(brandIconContainer).toBeInTheDocument();
+    expect(brandIconContainer).toHaveClass('bg-[#6B7A40]', 'rounded-xl', 'text-white');
+
+    const checkSquareIcon = brandIconContainer?.querySelector('svg');
+    expect(checkSquareIcon).toHaveClass('lucide-square-check-big', 'stroke-[2.2]');
+  });
+
+  // TC-HDR-003: Dynamic progress bar calculation (0%, 70%, 100%)
+  it('TC-HDR-003: should accurately calculate and render completion progress bar width and labels', () => {
+    const partialCounts: StatusCounts = { all: 10, completed: 7, pending: 2, inProgress: 1 };
+    const { rerender } = render(
+      <ThemeProvider>
+        <TodoHeader counts={partialCounts} onOpenCreateModal={vi.fn()} />
+      </ThemeProvider>
+    );
+
+    expect(screen.getByText('Progress: 70%')).toBeInTheDocument();
+    const progressBar = screen.getByText('Progress: 70%').closest('div')?.parentElement?.querySelector('.h-full.rounded-full');
+    expect(progressBar).toHaveStyle({ width: '70%' });
+
+    // Edge case: 0 total tasks
+    const zeroCounts: StatusCounts = { all: 0, completed: 0, pending: 0, inProgress: 0 };
+    rerender(
+      <ThemeProvider>
+        <TodoHeader counts={zeroCounts} onOpenCreateModal={vi.fn()} />
+      </ThemeProvider>
+    );
+    expect(screen.getByText('Progress: 0%')).toBeInTheDocument();
+    expect(progressBar).toHaveStyle({ width: '0%' });
+
+    // Edge case: 100% completion
+    const fullCounts: StatusCounts = { all: 4, completed: 4, pending: 0, inProgress: 0 };
+    rerender(
+      <ThemeProvider>
+        <TodoHeader counts={fullCounts} onOpenCreateModal={vi.fn()} />
+      </ThemeProvider>
+    );
+    expect(screen.getByText('Progress: 100%')).toBeInTheDocument();
+    expect(progressBar).toHaveStyle({ width: '100%' });
+  });
+
+  // TC-HDR-004: New Task button Figma styling and Plus icon
+  it('TC-HDR-004: should render New Task button with olive styling and Plus icon', () => {
+    render(
+      <ThemeProvider initialTheme="light">
+        <TodoHeader counts={mockCounts} onOpenCreateModal={vi.fn()} />
+      </ThemeProvider>
+    );
+
+    const newTaskBtn = screen.getByRole('button', { name: /New Task/i });
+    expect(newTaskBtn).toHaveClass('bg-[#6B7A40]', 'text-white', 'rounded-xl');
+
+    const plusIcon = newTaskBtn.querySelector('svg');
+    expect(plusIcon).toBeInTheDocument();
+    expect(plusIcon).toHaveClass('lucide-plus', 'stroke-[2.5]');
+  });
+
+  // TC-HDR-005: Header container layout & Figma shadow classes
+  it('TC-HDR-005: should apply Figma rounded-2xl border and elevation shadows to header container', () => {
+    render(
+      <ThemeProvider>
+        <TodoHeader counts={mockCounts} onOpenCreateModal={vi.fn()} />
+      </ThemeProvider>
+    );
+
+    const header = screen.getByRole('banner');
+    expect(header).toHaveClass(
+      'rounded-2xl',
+      'border',
+      'border-[#E2E4DC]',
+      'shadow-[0_2px_8px_-2px_rgba(35,45,20,0.06)]'
+    );
   });
 });

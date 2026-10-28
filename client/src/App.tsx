@@ -74,31 +74,31 @@ export default function App() {
     filters.sortBy !== 'createdAt';
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors duration-200 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen transition-colors duration-200 py-6 sm:py-8 px-4 sm:px-6 lg:px-8 bg-[#F8F7F3] dark:bg-[#202124] text-[#1F241C] dark:text-[#F1F3F4]">
       {/* Toast Notification */}
       {notification && (
         <div
-          className={`fixed bottom-5 right-5 z-50 flex items-center gap-2.5 px-4 py-3 rounded-xl shadow-lg border text-sm font-medium transition-all transform animate-bounce-subtle ${
+          className={`fixed bottom-5 right-5 z-50 flex items-center gap-2.5 px-4 py-3 rounded-2xl shadow-lg border text-xs sm:text-sm font-medium transition-all transform animate-bounce-subtle ${
             notification.type === 'error'
               ? 'bg-rose-50 dark:bg-rose-950 dark:text-rose-200 dark:border-rose-800 text-rose-800 border-rose-200'
-              : 'bg-emerald-50 dark:bg-emerald-950 dark:text-emerald-200 dark:border-emerald-800 text-emerald-800 border-emerald-200'
+              : 'bg-[#ECF5EE] dark:bg-[#263528] dark:text-emerald-300 dark:border-[#38543B] text-[#166534] border-[#BBF7D0]'
           }`}
           role="status"
         >
           {notification.type === 'error' ? (
             <AlertTriangle className="w-4 h-4 text-rose-600 flex-shrink-0" />
           ) : (
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-[#6B7A40] dark:text-[#C8CDD0] flex-shrink-0" />
           )}
           <span>{notification.message}</span>
         </div>
       )}
 
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-7xl mx-auto flex flex-col gap-6">
         {/* Header */}
         <TodoHeader counts={counts} onOpenCreateModal={handleOpenCreate} />
 
-        {/* Filters & Search */}
+        {/* Unified Single Horizontal Toolbar */}
         <TodoFilters
           filters={filters}
           counts={counts}
@@ -109,7 +109,27 @@ export default function App() {
           onClearFilters={clearFilters}
         />
 
-        {/* Todo List */}
+        {/* Active Filters & Counter Meta Bar */}
+        <div className="flex items-center justify-between text-xs px-1 text-[#656C5B] dark:text-[#A0A5AA] -mt-2">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span>
+              Showing <strong className="text-[#1F241C] dark:text-[#F1F3F4]">{todos.length}</strong> of{' '}
+              <strong className="text-[#1F241C] dark:text-[#F1F3F4]">{counts.all}</strong> tasks
+            </span>
+            {filters.status && (
+              <span className="px-2 py-0.5 rounded-full text-[11px] border bg-[#EDF1E5] dark:bg-[#3A3E43] text-[#536031] dark:text-[#D0D5D8] border-[#ECEEE6] dark:border-[#34373C]">
+                Status: {filters.status}
+              </span>
+            )}
+            {filters.priority && (
+              <span className="px-2 py-0.5 rounded-full text-[11px] border bg-[#EDF1E5] dark:bg-[#3A3E43] text-[#536031] dark:text-[#D0D5D8] border-[#ECEEE6] dark:border-[#34373C]">
+                Priority: {filters.priority}
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Todo List Grid */}
         <TodoList
           todos={todos}
           loading={loading}

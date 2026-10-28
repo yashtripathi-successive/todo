@@ -162,3 +162,59 @@ This document specifies the automated test suites for the Todo Application (**Ta
 | **12. Default to Light Mode** | TC-THM-001, TC-THM-013 |
 | **13. Theme Fallbacks & Safety** | TC-THM-007, TC-THM-008, TC-THM-009, TC-THM-015, TC-THM-016 |
 | **14. Zero Regression on Header** | TC-THM-023 |
+| **15. Figma Redesign UI & Theming** | TC-BDG-001 - TC-BDG-008, TC-HDR-001 - TC-HDR-005, TC-FLT-001 - TC-FLT-006, TC-ITM-001 - TC-ITM-006, TC-LST-001 - TC-LST-005 |
+
+---
+
+## 5. Figma Redesign UI & Layout Test Cases
+
+### 5.1 Badges Suite (`client/src/__tests__/Badge.test.tsx`)
+| Test ID | Component / Scenario | Verification Criteria |
+| :--- | :--- | :--- |
+| **TC-BDG-001** | `PriorityBadge` Low | Renders Low label, olive palette (`bg-[#EDF1E6]`, text `#4E5B2E`), dot `bg-[#6B7A40]`, `role="status"` |
+| **TC-BDG-002** | `PriorityBadge` Medium | Renders Medium label, amber palette (`bg-amber-50`, text `amber-700`), dot `bg-amber-500`, `role="status"` |
+| **TC-BDG-003** | `PriorityBadge` High | Renders High label, rose palette (`bg-rose-50`, text `rose-700`), dot `bg-rose-500`, `role="status"` |
+| **TC-BDG-004** | `PriorityBadge` Unknown | Renders slate fallback style without crashing |
+| **TC-BDG-005** | `StatusBadge` Pending | Renders Pending label, Clock icon, warm yellow-amber palette (`bg-[#FFFBEB]`, text `#92400E`), `role="status"` |
+| **TC-BDG-006** | `StatusBadge` In Progress | Renders In Progress label, PlayCircle icon, olive-sage palette (`bg-[#F0F5ED]`, text `#4F622C`), `role="status"` |
+| **TC-BDG-007** | `StatusBadge` Completed | Renders Completed label, CheckCircle2 icon, emerald green palette (`bg-[#ECF5EE]`, text `#166534`), `role="status"` |
+| **TC-BDG-008** | `StatusBadge` Unknown | Renders slate fallback style and omits icon gracefully |
+
+### 5.2 Header Suite Additions (`client/src/__tests__/TodoHeader.test.tsx`)
+| Test ID | Component / Scenario | Verification Criteria |
+| :--- | :--- | :--- |
+| **TC-HDR-001** | `TodoHeader` Theme Badge | Renders "Light Theme (Olive)" in light mode, and "Dark Theme" in dark mode |
+| **TC-HDR-002** | `TodoHeader` Brand Icon | Renders CheckSquare icon with stroke-[2.2] in olive-rounded container |
+| **TC-HDR-003** | `TodoHeader` Progress Bar | Dynamic inline CSS width calculation (0%, 70%, 100%) and percentage labels |
+| **TC-HDR-004** | `TodoHeader` New Task Button | Renders Plus icon with stroke-[2.5], olive styling, and calls `onOpenCreateModal` |
+| **TC-HDR-005** | `TodoHeader` Elevation & Layout | Renders `rounded-2xl`, responsive `flex-col md:flex-row`, and Figma shadow tokens |
+
+### 5.3 Filters Suite Additions (`client/src/__tests__/TodoFilters.test.tsx`)
+| Test ID | Component / Scenario | Verification Criteria |
+| :--- | :--- | :--- |
+| **TC-FLT-001** | `TodoFilters` Status Pills | Active pill applies olive style (`bg-[#6B7A40]`) and darker count badge (`bg-[#556233]`); inactive is transparent |
+| **TC-FLT-002** | `TodoFilters` Search Bar | Renders Search icon, conditional Clear (X) button, and clicking X clears query |
+| **TC-FLT-003** | `TodoFilters` Sort Menu | Renders 7 sort options and fires `onSortChange(by, order)` |
+| **TC-FLT-004** | `TodoFilters` Priority Menu | Renders priority options and selecting "All Priorities" passes `undefined` |
+| **TC-FLT-005** | `TodoFilters` Toolbar Layout | Validates `aria-label`, `rounded-2xl`, and uniform 40px (`h-10`) height across controls |
+| **TC-FLT-006** | `TodoFilters` Clear Filters Action | Hidden by default; appears with RotateCcw icon when filters active |
+
+### 5.4 Item Suite Additions (`client/src/__tests__/TodoItem.test.tsx`)
+| Test ID | Component / Scenario | Verification Criteria |
+| :--- | :--- | :--- |
+| **TC-ITM-001** | `TodoItem` Completed State | Renders green-tinted border `border-[#DDE6D3]`, filled olive checkbox, strikethrough, and `aria-label="Mark as incomplete"` |
+| **TC-ITM-002** | `TodoItem` Incomplete State | Renders neutral border `border-[#E2E4DC]`, unfilled checkbox, and `aria-label="Mark as complete"` |
+| **TC-ITM-003** | `TodoItem` Overdue Highlighting | Renders rose alert border, tinted bg, pulsing `OVERDUE` badge, and rose due date metadata |
+| **TC-ITM-004** | `TodoItem` Due Today Indicator | Renders amber badge `bg-amber-100 text-amber-800` and omits OVERDUE badge |
+| **TC-ITM-005** | `TodoItem` Actions Hover & A11y | Edit and delete buttons have aria-labels, icons, and transition opacity classes |
+| **TC-ITM-006** | `TodoItem` Metadata Footer | Displays Calendar, Clock, and CheckCircle2 icons and gracefully omits missing fields |
+
+### 5.5 List Suite Additions (`client/src/__tests__/TodoList.test.tsx`)
+| Test ID | Component / Scenario | Verification Criteria |
+| :--- | :--- | :--- |
+| **TC-LST-001** | `TodoList` Grid Layout | Renders items in Figma 2-column responsive grid container `grid grid-cols-1 md:grid-cols-2 gap-4` |
+| **TC-LST-002** | `TodoList` Loading Typography | Centered layout with large spinner (`size="lg"`) and `text-sm font-medium text-[#656C5B]` |
+| **TC-LST-003** | `TodoList` Error Banner | Rose alert card with AlertCircle icon, title "Unable to Load Tasks", and RefreshCw retry button |
+| **TC-LST-004** | `TodoList` Empty Card Layout | CheckSquare illustration in olive square, title "All clear! No tasks yet", and "Add New Task" button |
+| **TC-LST-005** | `TodoList` Filtered Empty Text | Displays "No matching tasks" and guidance subtext |
+
