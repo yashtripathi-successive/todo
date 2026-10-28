@@ -125,4 +125,126 @@ describe('TodoList Component', () => {
     expect(screen.getByText('First Task')).toBeInTheDocument();
     expect(screen.getByText('Second Task')).toBeInTheDocument();
   });
+
+  // --- Additional Figma Redesign, Layout, and Theming Tests ---
+
+  // TC-LST-001: 2-column responsive grid container layout
+  it('TC-LST-001: should render todos in Figma responsive 2-column grid container', () => {
+    const { container } = render(
+      <TodoList
+        todos={mockTodos}
+        loading={false}
+        error={null}
+        onRetry={vi.fn()}
+        onToggleComplete={vi.fn()}
+        onEdit={vi.fn()}
+        onDelete={vi.fn()}
+        onOpenCreate={vi.fn()}
+        hasFilters={false}
+      />
+    );
+
+    const gridContainer = container.querySelector('.grid');
+    expect(gridContainer).toBeInTheDocument();
+    expect(gridContainer).toHaveClass('grid-cols-1', 'md:grid-cols-2', 'gap-4');
+  });
+
+  // TC-LST-002: Loading state Figma spinner and typography
+  it('TC-LST-002: should render centered loading layout with large spinner and styled text', () => {
+    render(
+      <TodoList
+        todos={[]}
+        loading={true}
+        error={null}
+        onRetry={vi.fn()}
+        onToggleComplete={vi.fn()}
+        onEdit={vi.fn()}
+        onDelete={vi.fn()}
+        onOpenCreate={vi.fn()}
+        hasFilters={false}
+      />
+    );
+
+    const loadingText = screen.getByText('Loading your tasks...');
+    expect(loadingText).toHaveClass('text-sm', 'font-medium', 'text-[#656C5B]');
+
+    const spinner = screen.getByRole('status', { name: 'Loading' });
+    expect(spinner).toHaveClass('w-12', 'h-12', 'border-4', 'animate-spin');
+  });
+
+  // TC-LST-003: Error state banner Figma styling and RefreshCw icon
+  it('TC-LST-003: should render rose alert banner with AlertCircle and RefreshCw retry button', () => {
+    render(
+      <TodoList
+        todos={[]}
+        loading={false}
+        error="Server connection refused"
+        onRetry={vi.fn()}
+        onToggleComplete={vi.fn()}
+        onEdit={vi.fn()}
+        onDelete={vi.fn()}
+        onOpenCreate={vi.fn()}
+        hasFilters={false}
+      />
+    );
+
+    const heading = screen.getByText('Unable to Load Tasks');
+    expect(heading).toHaveClass('text-rose-900', 'font-semibold');
+
+    const retryBtn = screen.getByRole('button', { name: /Retry Connection/i });
+    expect(retryBtn).toHaveClass('bg-rose-600', 'hover:bg-rose-700', 'text-white', 'rounded-xl');
+
+    const retryIcon = retryBtn.querySelector('svg');
+    expect(retryIcon).toHaveClass('lucide-refresh-cw');
+  });
+
+  // TC-LST-004: Empty state card Figma layout, CheckSquare illustration and action button
+  it('TC-LST-004: should render EmptyState card with CheckSquare illustration and trigger onOpenCreate', () => {
+    const handleCreate = vi.fn();
+
+    render(
+      <TodoList
+        todos={[]}
+        loading={false}
+        error={null}
+        onRetry={vi.fn()}
+        onToggleComplete={vi.fn()}
+        onEdit={vi.fn()}
+        onDelete={vi.fn()}
+        onOpenCreate={handleCreate}
+        hasFilters={false}
+      />
+    );
+
+    expect(screen.getByText('All clear! No tasks yet')).toHaveClass('text-lg', 'font-bold');
+    expect(screen.getByText(/Add your first task above/i)).toBeInTheDocument();
+
+    const actionBtn = screen.getByRole('button', { name: 'Add New Task' });
+    expect(actionBtn).toHaveClass('bg-[#6B7A40]', 'text-white', 'rounded-xl');
+
+    fireEvent.click(actionBtn);
+    expect(handleCreate).toHaveBeenCalledTimes(1);
+  });
+
+  // TC-LST-005: Filtered empty state subtext guidance
+  it('TC-LST-005: should render filtered empty state with specific guidance to adjust filters', () => {
+    render(
+      <TodoList
+        todos={[]}
+        loading={false}
+        error={null}
+        onRetry={vi.fn()}
+        onToggleComplete={vi.fn()}
+        onEdit={vi.fn()}
+        onDelete={vi.fn()}
+        onOpenCreate={vi.fn()}
+        hasFilters={true}
+      />
+    );
+
+    expect(screen.getByText('No matching tasks')).toBeInTheDocument();
+    expect(
+      screen.getByText('Try adjusting your search query, priority filter, or status tabs to view tasks.')
+    ).toBeInTheDocument();
+  });
 });

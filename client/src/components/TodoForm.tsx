@@ -100,20 +100,21 @@ export const TodoForm: React.FC<TodoFormProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 dark:bg-black/60 backdrop-blur-sm animate-fade-in"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-fade-in"
       role="dialog"
       aria-modal="true"
       aria-labelledby="todo-form-title"
     >
-      <div className="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden">
+      <div className="bg-white dark:bg-[#303236] rounded-2xl max-w-lg w-full shadow-2xl border border-[#E2E4DC] dark:border-[#3E4248] overflow-hidden">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between">
-          <h2 id="todo-form-title" className="text-lg font-bold text-slate-800 dark:text-slate-100">
+        <div className="px-6 py-4 border-b border-[#ECEEE6] dark:border-[#34373C] flex items-center justify-between">
+          <h2 id="todo-form-title" className="text-lg font-bold text-[#1F241C] dark:text-[#F1F3F4]">
             {isEditing ? 'Edit Task' : 'Create New Task'}
           </h2>
           <button
+            type="button"
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+            className="p-1.5 rounded-lg text-[#8E9685] hover:text-[#1F241C] dark:text-[#73787E] dark:hover:text-[#F1F3F4] hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer"
             aria-label="Close dialog"
           >
             <X className="w-5 h-5" />
@@ -126,10 +127,10 @@ export const TodoForm: React.FC<TodoFormProps> = ({
             {/* Title */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label htmlFor="todo-title" className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+                <label htmlFor="todo-title" className="text-xs sm:text-sm font-semibold text-[#1F241C] dark:text-[#F1F3F4]">
                   Task Title <span className="text-rose-500">*</span>
                 </label>
-                <span className="text-xs text-slate-400 dark:text-slate-500">
+                <span className="text-xs text-[#8E9685] dark:text-[#73787E]">
                   {title.trim().length}/200
                 </span>
               </div>
@@ -140,10 +141,10 @@ export const TodoForm: React.FC<TodoFormProps> = ({
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g. Complete quarterly financial review"
                 maxLength={200}
-                className={`w-full px-3.5 py-2.5 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 ${
+                className={`w-full px-3.5 py-2.5 rounded-xl border text-xs sm:text-sm transition-all focus:outline-none focus:ring-2 ${
                   errors.title
-                    ? 'border-rose-300 dark:border-rose-700 focus:ring-rose-200 dark:focus:ring-rose-900/50 bg-rose-50/20 dark:bg-rose-950/20 text-slate-900 dark:text-slate-100'
-                    : 'border-slate-300 dark:border-slate-600 focus:border-indigo-500 focus:ring-indigo-100 dark:focus:ring-indigo-900/50 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100'
+                    ? 'border-rose-300 dark:border-rose-700 focus:ring-rose-200 dark:focus:ring-rose-900/50 bg-rose-50/20 dark:bg-rose-950/20 text-[#1F241C] dark:text-[#F1F3F4]'
+                    : 'border-[#E2E4DC] dark:border-[#3E4248] focus:border-[#6B7A40] dark:focus:border-[#C8CDD0] focus:ring-[#6B7A40]/20 dark:focus:ring-[#C8CDD0]/20 bg-white dark:bg-[#26282B] text-[#1F241C] dark:text-[#F1F3F4]'
                 }`}
                 autoFocus
               />
@@ -158,10 +159,10 @@ export const TodoForm: React.FC<TodoFormProps> = ({
             {/* Description */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label htmlFor="todo-desc" className="text-sm font-semibold text-slate-700 dark:text-slate-300">
-                  Description <span className="text-xs font-normal text-slate-400 dark:text-slate-500">(Optional)</span>
+                <label htmlFor="todo-desc" className="text-xs sm:text-sm font-semibold text-[#1F241C] dark:text-[#F1F3F4]">
+                  Description <span className="text-xs font-normal text-[#8E9685] dark:text-[#73787E]">(Optional)</span>
                 </label>
-                <span className="text-xs text-slate-400 dark:text-slate-500">
+                <span className="text-xs text-[#8E9685] dark:text-[#73787E]">
                   {description.length}/1000
                 </span>
               </div>
@@ -172,10 +173,10 @@ export const TodoForm: React.FC<TodoFormProps> = ({
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Add extra context or details for this task..."
                 maxLength={1000}
-                className={`w-full px-3.5 py-2.5 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 ${
+                className={`w-full px-3.5 py-2.5 rounded-xl border text-xs sm:text-sm transition-all focus:outline-none focus:ring-2 ${
                   errors.description
-                    ? 'border-rose-300 dark:border-rose-700 focus:ring-rose-200 dark:focus:ring-rose-900/50 bg-rose-50/20 dark:bg-rose-950/20 text-slate-900 dark:text-slate-100'
-                    : 'border-slate-300 dark:border-slate-600 focus:border-indigo-500 focus:ring-indigo-100 dark:focus:ring-indigo-900/50 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100'
+                    ? 'border-rose-300 dark:border-rose-700 focus:ring-rose-200 dark:focus:ring-rose-900/50 bg-rose-50/20 dark:bg-rose-950/20 text-[#1F241C] dark:text-[#F1F3F4]'
+                    : 'border-[#E2E4DC] dark:border-[#3E4248] focus:border-[#6B7A40] dark:focus:border-[#C8CDD0] focus:ring-[#6B7A40]/20 dark:focus:ring-[#C8CDD0]/20 bg-white dark:bg-[#26282B] text-[#1F241C] dark:text-[#F1F3F4]'
                 }`}
               />
               {errors.description && (
@@ -189,14 +190,14 @@ export const TodoForm: React.FC<TodoFormProps> = ({
             {/* Priority & Status Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="todo-priority" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                <label htmlFor="todo-priority" className="block text-xs sm:text-sm font-semibold text-[#1F241C] dark:text-[#F1F3F4] mb-1.5">
                   Priority <span className="text-rose-500">*</span>
                 </label>
                 <select
                   id="todo-priority"
                   value={priority}
                   onChange={(e) => setPriority(e.target.value as Priority)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-900/50 focus:border-indigo-500 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E4DC] dark:border-[#3E4248] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#6B7A40]/20 dark:focus:ring-[#C8CDD0]/20 focus:border-[#6B7A40] dark:focus:border-[#C8CDD0] bg-white dark:bg-[#26282B] text-[#1F241C] dark:text-[#F1F3F4] cursor-pointer"
                 >
                   <option value="Low">Low</option>
                   <option value="Medium">Medium</option>
@@ -205,14 +206,14 @@ export const TodoForm: React.FC<TodoFormProps> = ({
               </div>
 
               <div>
-                <label htmlFor="todo-status" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                <label htmlFor="todo-status" className="block text-xs sm:text-sm font-semibold text-[#1F241C] dark:text-[#F1F3F4] mb-1.5">
                   Status
                 </label>
                 <select
                   id="todo-status"
                   value={status}
                   onChange={(e) => setStatus(e.target.value as TodoStatus)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-900/50 focus:border-indigo-500 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E4DC] dark:border-[#3E4248] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#6B7A40]/20 dark:focus:ring-[#C8CDD0]/20 focus:border-[#6B7A40] dark:focus:border-[#C8CDD0] bg-white dark:bg-[#26282B] text-[#1F241C] dark:text-[#F1F3F4] cursor-pointer"
                 >
                   <option value="Pending">Pending</option>
                   <option value="In Progress">In Progress</option>
@@ -223,8 +224,8 @@ export const TodoForm: React.FC<TodoFormProps> = ({
 
             {/* Due Date */}
             <div>
-              <label htmlFor="todo-due-date" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                Due Date <span className="text-xs font-normal text-slate-400 dark:text-slate-500">(Optional)</span>
+              <label htmlFor="todo-due-date" className="block text-xs sm:text-sm font-semibold text-[#1F241C] dark:text-[#F1F3F4] mb-1.5">
+                Due Date <span className="text-xs font-normal text-[#8E9685] dark:text-[#73787E]">(Optional)</span>
               </label>
               <div className="relative">
                 <input
@@ -232,27 +233,27 @@ export const TodoForm: React.FC<TodoFormProps> = ({
                   type="date"
                   value={dueDate}
                   onChange={(e) => setDueDate(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-900/50 focus:border-indigo-500 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E4DC] dark:border-[#3E4248] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#6B7A40]/20 dark:focus:ring-[#C8CDD0]/20 focus:border-[#6B7A40] dark:focus:border-[#C8CDD0] bg-white dark:bg-[#26282B] text-[#1F241C] dark:text-[#F1F3F4]"
                 />
-                <Calendar className="w-4 h-4 text-slate-400 dark:text-slate-500 absolute right-3.5 top-3 pointer-events-none" />
+                <Calendar className="w-4 h-4 text-[#8E9685] dark:text-[#73787E] absolute right-3.5 top-3 pointer-events-none" />
               </div>
             </div>
           </div>
 
           {/* Form Actions */}
-          <div className="bg-slate-50 dark:bg-slate-900/60 px-6 py-4 flex items-center justify-end gap-3 border-t border-slate-100 dark:border-slate-700">
+          <div className="bg-[#F8F7F3] dark:bg-[#27282C] px-6 py-4 flex items-center justify-end gap-3 border-t border-[#ECEEE6] dark:border-[#34373C]">
             <button
               type="button"
               onClick={onClose}
               disabled={submitting}
-              className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-200/60 dark:hover:bg-slate-800 rounded-xl transition-colors"
+              className="px-4 py-2 text-xs sm:text-sm font-medium border border-[#E2E4DC] dark:border-[#3E4248] text-[#656C5B] dark:text-[#A0A5AA] hover:bg-black/5 dark:hover:bg-white/5 rounded-xl transition-colors cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={submitting}
-              className="px-5 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm transition-colors disabled:opacity-50"
+              className="px-5 py-2 text-xs sm:text-sm font-semibold text-white dark:text-[#202124] bg-[#6B7A40] hover:bg-[#5A6836] dark:bg-[#C8CDD0] dark:hover:bg-[#DBE0E3] rounded-xl shadow-sm transition-all disabled:opacity-50 cursor-pointer"
             >
               {submitting ? 'Saving...' : isEditing ? 'Update Task' : 'Create Task'}
             </button>

@@ -3,32 +3,56 @@
 @tailwind utilities;
 
 :root {
-  --bg-app: #f8fafc;
-  --bg-surface: #ffffff;
-  --bg-surface-subtle: #f1f5f9;
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
-  --border-color: #e2e8f0;
-  --border-focus: #6366f1;
+  --bg-app: #F8F7F3;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #FBFBF9;
+  --bg-subtle: #F0EFE9;
+  --bg-input: #FFFFFF;
+  --border-color: #E2E4DC;
+  --border-subtle: #ECEEE6;
+  --primary: #6B7A40;
+  --primary-hover: #5A6836;
+  --primary-light: #EEF2E6;
+  --primary-text: #48542A;
+  --text-primary: #1F241C;
+  --text-secondary: #656C5B;
+  --text-muted: #8E9685;
+  --badge-bg: #EDF1E5;
+  --badge-text: #536031;
+  --shadow-sm: 0 1px 3px rgba(40, 48, 25, 0.05);
+  --shadow-card: 0 2px 8px -2px rgba(35, 45, 20, 0.06), 0 1px 3px -1px rgba(35, 45, 20, 0.04);
+  --shadow-card-hover: 0 8px 20px -4px rgba(35, 45, 20, 0.1), 0 4px 6px -2px rgba(35, 45, 20, 0.04);
   color-scheme: light;
 }
 
 .dark {
-  --bg-app: #0f172a;
-  --bg-surface: #1e293b;
-  --bg-surface-subtle: #334155;
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-  --border-color: #334155;
-  --border-focus: #818cf8;
+  --bg-app: #202124;
+  --bg-card: #303236;
+  --bg-card-hover: #36393E;
+  --bg-subtle: #27282C;
+  --bg-input: #26282B;
+  --border-color: #3E4248;
+  --border-subtle: #34373C;
+  --primary: #C8CDD0;
+  --primary-hover: #DBE0E3;
+  --primary-light: #3C4045;
+  --primary-text: #1E2023;
+  --text-primary: #F1F3F4;
+  --text-secondary: #A0A5AA;
+  --text-muted: #73787E;
+  --badge-bg: #3A3E43;
+  --badge-text: #D0D5D8;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25);
+  --shadow-card: 0 4px 12px -2px rgba(0, 0, 0, 0.35);
+  --shadow-card-hover: 0 10px 24px -4px rgba(0, 0, 0, 0.45);
   color-scheme: dark;
 }
 
 @layer base {
   body {
-    @apply antialiased text-slate-800 bg-slate-50 dark:text-slate-100 dark:bg-slate-900 selection:bg-indigo-500 selection:text-white transition-colors duration-200;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    @apply antialiased transition-colors duration-200;
+    background-color: var(--bg-app);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
 }

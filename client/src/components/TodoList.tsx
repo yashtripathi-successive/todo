@@ -32,7 +32,7 @@ export const TodoList: React.FC<TodoListProps> = ({
     return (
       <div className="py-20 flex flex-col items-center justify-center gap-3">
         <Spinner size="lg" />
-        <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Loading your tasks...</p>
+        <p className="text-sm font-medium text-[#656C5B] dark:text-[#A0A5AA]">Loading your tasks...</p>
       </div>
     );
   }
@@ -49,7 +49,7 @@ export const TodoList: React.FC<TodoListProps> = ({
         <p className="text-sm text-rose-600 dark:text-rose-300 max-w-md mx-auto mb-4">{error}</p>
         <button
           onClick={onRetry}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-sm font-medium transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-sm font-medium transition-colors cursor-pointer"
         >
           <RefreshCw className="w-4 h-4" />
           Retry Connection
@@ -64,7 +64,7 @@ export const TodoList: React.FC<TodoListProps> = ({
         title={hasFilters ? 'No matching tasks' : 'All clear! No tasks yet'}
         description={
           hasFilters
-            ? 'Try adjusting your search keywords, priority filter, or status tabs.'
+            ? 'Try adjusting your search query, priority filter, or status tabs to view tasks.'
             : 'Add your first task above to start tracking your daily progress and priorities.'
         }
         actionText="Add New Task"
@@ -74,7 +74,7 @@ export const TodoList: React.FC<TodoListProps> = ({
   }
 
   return (
-    <div className="space-y-3">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {todos.map((todo) => (
         <TodoItem
           key={todo._id}
